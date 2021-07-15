@@ -12,13 +12,12 @@ class testApi(Resource):
             'queue':'',
             'sum':''
         }
-        taskId =  str(request.args.get('task'))
+        task = str(request.args.get('task'))
+        queue =  str(request.args.get('queue'))
         a = int(request.args.get('a'))
         b = int(request.args.get('b'))
-        c = add.apply_async(queue=taskId,kwargs={'x':a,'y':b})
-        while not c.successful():
-            time.sleep(0.001)
-        res['queue'] =taskId
+        
+        res['queue'] =queue
         res['sum'] = c.get()
         res = jsonify(res)
         res.status_code = 200
